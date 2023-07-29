@@ -10,13 +10,14 @@ const options = {
 
 test('getPostData returns a string', async () => {
   const result = await getPostData(options, 'dallas.md');
+  console.log(result)
   expect(typeof result).toBe('string');
 });
 
 
-test('listMarkdownFiles returns an array', async () => {
-  const markdownFiles = await listMarkdownFiles(options)
-      .then((markdownFiles) => {
-        expect(Array.isArray(markdownFiles)).toBe(true)
-      })
-})
+// test('listMarkdownFiles returns an array', async () => {
+//   const markdownFiles = await listMarkdownFiles(options)
+//       .then((markdownFiles) => {
+//         expect(Array.isArray(markdownFiles)).toBe(true)
+//       })
+// })

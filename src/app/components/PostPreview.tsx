@@ -1,10 +1,17 @@
 import React from 'react'
 
-type Props = {}
+type Props = {
+  title: string,
+  date: string,
+  content: string,
+}
 
-function PostPreview({}: Props) {
+function PostPreview({title, date, content}: Props) {
   return (
-    <div>PostPreview</div>
+    <div>
+      <p>{title}</p>
+      <p>{content}</p>
+    </div>
   )
 }
 

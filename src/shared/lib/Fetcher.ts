@@ -1,4 +1,7 @@
-import { Octokit } from "@octokit/rest";
+import { Octokit } from '@octokit/rest'
+import matter from 'gray-matter'
+import { remark } from 'remark'
+import html from 'remark-html'
 
 interface FetcherOptions {
   owner: string;
@@ -8,8 +11,8 @@ interface FetcherOptions {
   userAgent: string
 }
 
-// Fetches a single markdown file from a GitHub repo
-export async function getPostData(options: FetcherOptions, fileName: string) : Promise<string> {
+// Fetches a blogpost from a GitHub repo
+export async function getPostData(options: FetcherOptions, fileName: string) : Promise<BlogPost> {
 
   const octokit = new Octokit({
     request: {
@@ -25,13 +28,30 @@ export async function getPostData(options: FetcherOptions, fileName: string) : P
     path: options.path + fileName
   });
   
+  // the response should be an array
   if(Array.isArray(response.data) || response.data.type !== 'file') {
     throw new Error('Response data is not a file')
   }
 
-  const markdownContent = Buffer.from(response.data.content, 'base64').toString('utf-8')
+  // convert content to base64 and then to utf-8
+  const content = Buffer.from(response.data.content, 'base64').toString('utf-8')
   
-  return markdownContent
+  // use matter to parse the content
+  const matterResult = matter(content)
+  const processedContent = await remark()
+    .use(html)
+    .process(matterResult.content)
+
+  const blogPost = {
+    id: matterResult.data.id,
+    title: matterResult.data.title,
+    content: processedContent.toString(),
+    date: matterResult.data.date,
+    tags: matterResult.data.tags,
+  }
+  
+  
+  return blogPost
 }
 
 // Fetches all markdown files from a GitHub repo
@@ -62,6 +82,25 @@ export async function listMarkdownFiles(options: FetcherOptions) {
 
   return []
 }
+
+// Fetches all markdown files from a GitHub repo and returns an array of BlogPost objects
+export async function getAllMarkdownFiles(options: FetcherOptions) : Promise<BlogPost[]> {
+  const markdownFiles = await listMarkdownFiles(options)
+  const blogPosts = await Promise.all(markdownFiles.map(async (fileName) => {
+    const fileContents = await getPostData(options, options.path + fileName)
+    const { data } = matter(fileContents)
+    return {
+      id: data.id,
+      title: data.title,
+      content: data.content,
+      date: data.date,
+      tags: data.tags,
+    }
+  }))
+  return blogPosts
+}
+
+
 
 
 
