@@ -1,4 +1,4 @@
-import { getAllMarkdownFiles } from '@/shared/lib/Fetcher'
+import { getPosts } from '@/shared/lib/Fetcher'
 import React from 'react'
 import PostPreview from './PostPreview'
 
@@ -11,19 +11,13 @@ const options = {
 }
 
 const Posts = async () => {
-  const posts: BlogPost[] = await getAllMarkdownFiles(options)
+  const posts =  await getPosts()
+  console.log(posts)
 
-  if(!posts) {
-    return <p>Sorry nothing to see here!</p>
-  }
 
   return (
     <>
-    {
-      posts.map((p: BlogPost) => (
-        <PostPreview key={p.id} title={p.title} date={p.date} content={p.content} />
-      ))
-    }
+    
     </>
   )
 }

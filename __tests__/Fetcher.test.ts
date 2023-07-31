@@ -1,4 +1,4 @@
-import { getPostData, listMarkdownFiles } from '../src/shared/lib/Fetcher'
+import { getPostData, listMarkdownFiles, getPostsByName } from '../src/shared/lib/Fetcher'
 
 const options = {
   owner: process.env.GITHUB_OWNER as string,
@@ -8,16 +8,15 @@ const options = {
   userAgent: process.env.GITHUB_USER_AGENT as string,
 }
 
-test('getPostData returns a string', async () => {
-  const result = await getPostData(options, 'dallas.md');
-  console.log(result)
-  expect(typeof result).toBe('string');
+test('getPostData returns a promise', async () => {
+  const result = await getPostData(options, 'sample.md');
+  expect(typeof result).toBe('object');
 });
 
 
-// test('listMarkdownFiles returns an array', async () => {
-//   const markdownFiles = await listMarkdownFiles(options)
-//       .then((markdownFiles) => {
-//         expect(Array.isArray(markdownFiles)).toBe(true)
-//       })
-// })
+test('listMarkdownFiles returns an array', async () => {
+  const markdownFiles = await listMarkdownFiles(options)
+      .then((markdownFiles) => {
+        expect(Array.isArray(markdownFiles)).toBe(true)
+      })
+})
