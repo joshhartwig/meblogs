@@ -1,15 +1,9 @@
-import { Octokit } from '@octokit/rest'
 import { v4 as uuidv4 } from 'uuid'
 import matter from 'gray-matter'
+import remark from 'remark'
+import html from 'remark-html'
+import getFormattedDate from './FormatDate'
 
-
-// interface FetcherOptions {
-//   owner: string;
-//   repo: string;
-//   path: string;
-//   token: string;
-//   userAgent: string
-// }
 type Filetree = {
   "tree": [
       {
@@ -18,7 +12,7 @@ type Filetree = {
   ]
 }
 
-
+// returns all posts from a specific repo
 export async function getPosts() : Promise<BlogPost[] | undefined> {
   const res = await fetch(`https://api.github.com/repos/joshhartwig/meblogposts/git/trees/main?recursive=1`,{
     headers: {
@@ -46,7 +40,7 @@ export async function getPosts() : Promise<BlogPost[] | undefined> {
   return posts.sort((a,b) => a.date < b.date ? 1 : -1)  //sort in ascending order
 }
 
-
+// returns a single post by filename
 export async function getPostsByName(filename: string) : Promise<BlogPost | undefined> {
   const res = await fetch(`https://raw.githubusercontent.com/joshhartwig/meblogposts/main/${filename}`,{
     headers: {
@@ -62,13 +56,16 @@ export async function getPostsByName(filename: string) : Promise<BlogPost | unde
   if(rawMD === '404: Not Found') return undefined
 
   const frontMatter = matter(rawMD)
+  const date = getFormattedDate(frontMatter.data.date)
+
   const blogPost = {
-    id: uuidv4(),
+    id: filename,
     title: frontMatter.data.title,
-    date: frontMatter.data.date,
+    date: date,
     tags: frontMatter.data.tags,
     content: frontMatter.content,
   }
+
   return blogPost
 }
 

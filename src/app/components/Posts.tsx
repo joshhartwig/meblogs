@@ -1,23 +1,29 @@
-import { getPosts } from '@/shared/lib/Fetcher'
+import { getPosts } from '@/shared/lib/PostFetcher'
 import React from 'react'
+import Post from './PostPreview'
 import PostPreview from './PostPreview'
 
-const options = {
-  owner: process.env.GITHUB_OWNER as string,
-  repo: process.env.GITHUB_REPO as string,
-  path: process.env.GITHUB_PATH as string, 
-  token: process.env.GITHUB_TOKEN as string,
-  userAgent: process.env.GITHUB_USER_AGENT as string,
-}
 
 const Posts = async () => {
-  const posts =  await getPosts()
-  console.log(posts)
+  const posts = await getPosts()
+
+  const content = (posts) ? posts.map((post) => {
+    return (
+      <PostPreview
+        key={post.id}
+        id={post.id}
+        title={post.title}
+        date={post.date}
+      />
+    )
+  }) : "No posts found."
 
 
   return (
     <>
-    
+      {
+        content
+      }
     </>
   )
 }
