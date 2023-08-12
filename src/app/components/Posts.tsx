@@ -14,6 +14,7 @@ const Posts = async () => {
         id={post.id}
         title={post.title}
         date={post.date}
+        readTime={post.readTime}
       />
     )
   }) : "No posts found."

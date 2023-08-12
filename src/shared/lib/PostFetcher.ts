@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 import matter from 'gray-matter'
 import remark from 'remark'
 import html from 'remark-html'
-import getFormattedDate from './FormatDate'
+import { getFormattedDate, getReadingTime } from './Utility'
 
 type Filetree = {
   "tree": [
@@ -64,8 +64,9 @@ export async function getPostsByName(filename: string) : Promise<BlogPost | unde
     date: date,
     tags: frontMatter.data.tags,
     content: frontMatter.content,
+    readTime: getReadingTime(frontMatter.content),
   }
-
+  
   return blogPost
 }
 
