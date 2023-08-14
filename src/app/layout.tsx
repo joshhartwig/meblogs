@@ -1,9 +1,13 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Noto_Sans } from 'next/font/google'
 import Navbar from './components/Navigation/Navbar'
 
-const inter = Inter({ subsets: ['latin'] })
+const noto_sans = Noto_Sans({
+  weight: ["400","700"],
+  style: ["normal","italic"],
+  subsets: ["latin"],
+})
 
 export const metadata: Metadata = {
   title: 'Josh Hartwig',
@@ -17,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="">
+      <body className={noto_sans.className}>
         <Navbar />
         {children}
       </body>

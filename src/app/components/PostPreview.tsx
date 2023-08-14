@@ -15,8 +15,9 @@ function PostPreview({id, title, date, readTime}: Props) {
   return (
     <article className="prose mb-8">
       <header>
-        <p className="text-3xl text-slate-900 m-0">{title}</p>
+        <p className="text-3xl text-slate-900 m-0"><Link href={`/posts/${id}`} className="no-underline">{title}</Link></p>
         <div className="flex items-center">
+
           <FaRegCalendarAlt className="inline-block mr-2" />
           <span className="text-sm text-slate-500 m-0">{date}</span>
 
