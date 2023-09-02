@@ -13,19 +13,20 @@ export default async function Post( { params }: { params: { id: string } }) {
 
   return (
     
-    <div className='blog-post px-16 lg:pt-16 lg:pb-24 mx-auto max-w-2xl'>
+    <div className='blog-post px-4 lg:pt-16 lg:pb-24 mx-auto max-w-2xl'>
       <div className='blog-post-title'>
-        <p className="prose prose-2xl prose-stone">{post.title}</p>
+        <h1 className="text-2xl">{post.title}</h1>
       </div>
+
       <div className='blog-post-details flex items-center'>
-        <FaRegCalendarAlt className='inline-block mr-2 prose prose-zinc' />
-        <p className='inline-block ml-4 mr-2 prose prose-zinc'>{post.date}</p>
+        <FaRegCalendarAlt className='inline-block mr-2' />
+        <p className='inline-block ml-4 mr-2'>{post.date}</p>
 
-        <FaBookReader className='inline-block ml-4 mr-2 prose prose-zinc' />
-        <p className='inline-block ml-4 mr-2 prose prose-zinc'>Reading Time: {post.readTime} mins</p>
+        <FaBookReader className='inline-block ml-4 mr-2' />
+        <p className='inline-block ml-4 mr-2'>Reading Time: {post.readTime} mins</p>
       </div>
 
-      <ReactMarkdown className="prose prose-slate">
+      <ReactMarkdown className="mt-8">
         {post.content}
       </ReactMarkdown>
     </div>

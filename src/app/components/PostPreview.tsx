@@ -1,37 +1,35 @@
 import React from 'react'
-import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
-import { FaBookReader, FaRegCalendarAlt } from 'react-icons/fa'
-import { read } from 'fs'
 
 type Props = {
-  id: string,
-  title: string,
-  date: string,
-  readTime: number,
+  id: string
+  title: string
+  date: string
+  readTime: number
+  description: string
 }
 
-function PostPreview({id, title, date, readTime}: Props) {
+function PostPreview({ id, title, date, readTime, description }: Props) {
   return (
-    <article className="prose mb-8">
-      <header>
-        <p className="text-3xl text-slate-900 m-0"><Link href={`/posts/${id}`} className="no-underline">{title}</Link></p>
-        <div className="flex items-center">
-
-          <FaRegCalendarAlt className="inline-block mr-2" />
-          <span className="text-sm text-slate-500 m-0">{date}</span>
-
-          <FaBookReader className="inline-block ml-4 mr-2" />
-          <span className="text-sm text-slate-500 m-0">{readTime} min read</span>
-
+    <li>
+      <Link
+        href={`/posts/${id}`}
+        className="space-y-1.5 !no-underline flex flex-col mb-3"
+      >
+        <div>
+          <span className="font-medium underline underline-offset-4 lowercase">
+            {title}
+          </span>
         </div>
-        
-        <p className="m-0"><Link href={`/posts/${id}`}>More Details</Link></p>
-      </header>
-    </article>
+
+        <div>
+          <span className="text-gray-600">{description}</span>
+        </div>
+      </Link>
+    </li>
   )
 }
 
 export default PostPreview
 
-// <ReactMarkdown className="">{preview}</ReactMarkdown>
+//<Link href={`/posts/${id}`}>

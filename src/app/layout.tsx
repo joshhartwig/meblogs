@@ -1,17 +1,17 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Noto_Sans } from 'next/font/google'
-import Navbar from './components/Navigation/Navbar'
+import { Fira_Sans } from 'next/font/google'
+import Header from './components/Navigation/Header'
 
-const noto_sans = Noto_Sans({
-  weight: ["400","700"],
-  style: ["normal","italic"],
-  subsets: ["latin"],
+const fira_sans = Fira_Sans({
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
 })
 
 export const metadata: Metadata = {
   title: 'Josh Hartwig',
-  description: 'Various musings',
+  description: 'various musings',
 }
 
 export default function RootLayout({
@@ -21,9 +21,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={noto_sans.className}>
-        <Navbar />
-        {children}
+      <body className="fira_sans.className text-[0.9rem] antialiased">
+        <div className="flex min-h-screen flex-col py-8">
+          <Header />
+          {children}
+        </div>
       </body>
     </html>
   )
