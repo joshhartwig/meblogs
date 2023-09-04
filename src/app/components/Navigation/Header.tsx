@@ -5,7 +5,7 @@ import { BsBrightnessHigh } from 'react-icons/bs'
 
 const Header = () => {
   return (
-    <header className="px-1 mr-auto ml-auto w-full min-w-lg max-w-lg">
+    <header className="mr-auto ml-auto w-full min-w-lg max-w-lg">
       <div className="flex items-center justify-between py-4">
         <Link href="/" className="flex items-center space-x-2">
           <div className="flex flex-col space-y-1 text-sm leading-none">
