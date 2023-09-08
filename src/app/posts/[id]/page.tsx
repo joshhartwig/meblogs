@@ -29,11 +29,9 @@ export default async function Post({ params }: { params: { id: string } }) {
         </span>
       </div>
 
-      <ReactMarkdown
-        className="mt-8 prose"
-        children={post.content}
-        rehypePlugins={[rehypeRaw]}
-      />
+      <ReactMarkdown className="mt-8 prose" rehypePlugins={[rehypeRaw]}>
+        {post.content}
+      </ReactMarkdown>
     </div>
   )
 }
